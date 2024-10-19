@@ -1,25 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { client as sanityClient } from './client';
+
+// Import context and pages
+import { QuizContext } from "./store/QuizContext";
+import HomePage from "./component/Pages/HomePage";
+import QuizPage from "./component/Pages/QuizPage";
+import ResultsPage from "./component/Pages/ResultsPage";
+
+// Define the router
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomePage />, // Home page with subject selection
+  },
+  {
+    path: "/quiz/:subject", // Quiz page that dynamically loads based on the selected subject
+    element: <QuizPage />,
+  },
+  {
+    path: "/results", // Results page after quiz completion
+    element: <ResultsPage />,
+  },
+]);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const { changeQuizData } = useContext(QuizContext); 
+  const [quizzes, setQuizzes] = useState(null);
+
+  // Fetch quiz data from Sanity
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `*[_type == "quiz"] {
+          title,
+          slug,
+          icon{
+              asset->{
+                url
+              },
+          questions[] {
+            question,
+            options,
+            answer
+          }
+        }`
+      )
+      .then((data) => setQuizzes(data))
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    if (quizzes) {
+      changeQuizData(quizzes); 
+    }
+  }, [quizzes, changeQuizData]);
+
+  return <RouterProvider router={router}></RouterProvider>;
 }
 
 export default App;
