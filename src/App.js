@@ -37,10 +37,7 @@ function App() {
         `*[_type == "quiz"] {
           title,
           slug,
-          icon{
-              asset->{
-                url
-              },
+          icon,
           questions[] {
             question,
             options,

@@ -13,7 +13,8 @@ const QuizPage = () => {
   const selectedQuiz = quizData.find((quiz) => quiz.title === subject);
 
   const handleAnswerSelect = (answer) => {
-    if (answer === selectedQuiz.questions[currentQuestion].correctAnswer) {
+    console.log(answer)
+    if (answer === selectedQuiz.questions[currentQuestion].answer) {
       setScore(score + 1);
     }
   };
