@@ -39,7 +39,7 @@ function App() {
           slug,
           icon,
           questions[] {
-            question,
+            questionText,
             options,
             answer
           }
