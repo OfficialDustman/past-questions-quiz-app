@@ -8,7 +8,7 @@ const QuestionScreen = ({ questionData, questionNumber, totalQuestions, onAnswer
       <div className="left-content">
         <div className="question-wrapper">
           <p className="question-count">Question {questionNumber} of {totalQuestions}</p>
-          <h2 className="question">{questionData.question}</h2>
+          <h2 className="question">{questionData.questionText}</h2>
         </div>
         <ProgressBar progress={(questionNumber / totalQuestions) * 100} />
       </div>
