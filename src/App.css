@@ -65,6 +65,19 @@ button {
 /*************** End of css reset ****************/
 
 /*************** Start Hide Other Screens ****************/
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 3rem auto;
+}
+
+/* Root Layout Styling */
+.root-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .start-menu {
   display: none;
 }
