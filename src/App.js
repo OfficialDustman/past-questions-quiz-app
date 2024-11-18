@@ -6,6 +6,7 @@ import { client as sanityClient } from './client';
 
 // Import context and pages
 import { QuizContext } from "./store/QuizContext";
+import RootLayout from "./component/Layouts/RootLayout";
 import HomePage from "./component/Pages/HomePage";
 import QuizPage from "./component/Pages/QuizPage";
 import ResultsPage from "./component/Pages/ResultsPage";
@@ -14,16 +15,24 @@ import ResultsPage from "./component/Pages/ResultsPage";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />, // Home page with subject selection
-  },
-  {
-    path: "/quiz/:subject", // Quiz page that dynamically loads based on the selected subject
-    element: <QuizPage />,
-  },
-  {
-    path: "/results", // Results page after quiz completion
-    element: <ResultsPage />,
-  },
+    element: <RootLayout />,
+    // errorElement: <ErrorPage />,
+    id: "root",
+    children: [
+      {
+        index: true,
+        element: <HomePage />, // Home page with subject selection
+      },
+      {
+        path: "/quiz/:subject", // Quiz page that dynamically loads based on the selected subject
+        element: <QuizPage />,
+      },
+      {
+        path: "/results", // Results page after quiz completion
+        element: <ResultsPage />,
+      },
+    ]
+  }
 ]);
 
 function App() {
